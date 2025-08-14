@@ -1,14 +1,23 @@
 {
   "name": "bhj-diploma",
   "version": "1.0.0",
-  "description": "",
+  "description": "Нажмите на изображение, чтобы посмотреть видео и описание:",
+  "homepage": "https://github.com/Patience-labour/JS-Diplom#readme",
+  "bugs": {
+    "url": "https://github.com/Patience-labour/JS-Diplom/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Patience-labour/JS-Diplom.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
@@ -18,11 +27,11 @@
     "lowdb": "^1.0.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^1.18.6",
     "uniqid": "^5.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "nodemon": "^3.1.10"
   }
 }
