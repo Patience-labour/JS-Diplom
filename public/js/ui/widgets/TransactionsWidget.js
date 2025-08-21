@@ -23,7 +23,7 @@ class TransactionsWidget {
    * */
   registerEvents() {
     const incomeButton = this.element.querySelector('.create-income-button');
-    const expenseButton = this.element.querySelector('create-expense-button');
+    const expenseButton = this.element.querySelector('.create-expense-button');
 
     incomeButton.addEventListener('click', () => {
       App.getModal('#modal-new-income');

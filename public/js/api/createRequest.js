@@ -1,37 +1,62 @@
 const createRequest = (options = {}) => {
+    if (!options.url || !options.method) {
+        console.error('URL and method are required');
+        return;
+    }
+
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
+    xhr.withCredentials = true;
 
-    let requestData = new FormData();
     let url = options.url;
+    let requestData = null;
 
     if (options.method === 'GET' && options.data) {
-        const queryParams = new URLSearchParams();
+        const params = new URLSearchParams();
         for (const key in options.data) {
-            queryParams.append(key, options.data[key]);
+            if (options.data.hasOwnProperty(key)) {
+                params.append(key, options.data[key]);
+            }
         }
-        url += '?' + queryParams.toString();
-    }
+        url += '?' + params.toString();
+    } 
     else if (options.data) {
+        requestData = new FormData();
         for (const key in options.data) {
-            requestData.append(key, options.data[key]);
+            if (options.data.hasOwnProperty(key)) {
+                requestData.append(key, options.data[key]);
+            }
         }
     }
-    xhr.open(options.method, url);
 
-    xhr.onload = function () {
-        if (xhr.status === 200 && xhr.status < 300) {
-            options.callback(null, xhr.response);
-        } else {
-            options.callback(new Error('Request failed with status ${xhr.status}'), null)
+    xhr.addEventListener('load', () => {
+        if (typeof options.callback === 'function') {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                options.callback(null, xhr.response);
+            } else {
+                options.callback(new Error(`Request failed with status ${xhr.status}`), null);
+            }
         }
-    };
-    xhr.onerror = function () {
-        options.callback(new Error('Network error'), null);
-    };
+    });
+
+    xhr.addEventListener('error', () => {
+        if (typeof options.callback === 'function') {
+            options.callback(new Error('Network error'), null);
+        }
+    });
+
+    xhr.addEventListener('timeout', () => {
+        if (typeof options.callback === 'function') {
+            options.callback(new Error('Request timeout'), null);
+        }
+    });
+
     try {
+        xhr.open(options.method, url);
         xhr.send(requestData);
-    } catch (err) {
-        options.callback(err, null);
+    } catch (error) {
+        if (typeof options.callback === 'function') {
+            options.callback(error, null);
+        }
     }
 };

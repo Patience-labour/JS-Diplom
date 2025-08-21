@@ -35,18 +35,14 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    const removeBtn = this.element.querySelector('.remove-account');
-    const removeTransaction = this.element.querySelector('.transaction__remove');
+    const removeBtn = document.querySelector('.remove-account');
 
     removeBtn.addEventListener('click', () => {
       this.removeAccount();
-    })
+    });
 
-    removeTransaction.addEventListener('click', () => {
-      const transactionId = removeBtn.dataset.id
-      removeTransaction(transactionId);
-    })
   }
+
 
   /**
    * Удаляет счёт. Необходимо показать диаголовое окно (с помощью confirm())
